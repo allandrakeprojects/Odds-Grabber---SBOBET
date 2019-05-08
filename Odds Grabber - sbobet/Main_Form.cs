@@ -675,6 +675,8 @@ namespace Odds_Grabber___sbobet
             }
         }
 
+        private bool __detect_ = false;
+
         // ----- Functions
         // DAFA888 -----
         private async void ___FIRST_RUNNINGAsync()
@@ -779,7 +781,25 @@ namespace Odds_Grabber___sbobet
                                 HomeTeamName = _jo.SelectToken("[2][0][1][" + i + "][2][1]");
                                 AwayTeamName = _jo.SelectToken("[2][0][1][" + i + "][2][2]");
                                 KickOffDateTime = _jo.SelectToken("[2][0][1][" + i + "][2][5]");
-                                DateTime KickOffDateTime_Replace = DateTime.ParseExact(KickOffDateTime.ToString(), "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                                DateTime KickOffDateTime_Replace = DateTime.ParseExact("05/08/2019 00:00", "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                                try
+                                {
+                                    KickOffDateTime_Replace = DateTime.ParseExact(KickOffDateTime.ToString(), "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                                    if (__detect_)
+                                    {
+                                        __detect_ = false;
+                                        SendMyBot("Okay.");
+                                    }
+                                }
+                                catch (Exception err)
+                                {
+                                    if (!__detect_)
+                                    {
+                                        SendMyBot("Detect.");
+                                    }
+                                    __detect_ = true;
+                                    break;
+                                }
                                 KickOffDateTime = KickOffDateTime_Replace.ToString("yyyy-MM-dd HH:mm:ss");
                                 StatementDate = KickOffDateTime_Replace.ToString("yyyy-MM-dd 00:00:00");
 
@@ -850,49 +870,6 @@ namespace Odds_Grabber___sbobet
                                         }
                                     }
                                 }
-
-                                //MessageBox.Show(
-                                //                "LeagueName: " + LeagueName + "\n" +
-                                //                //"MatchID: " + ref_match_id + "\n" +
-                                //                //"_row_no: " + _row_no + "\n" +
-                                //                "HomeTeamName: " + HomeTeamName + "\n" +
-                                //                "HomeTeamName: " + AwayTeamName + "\n" +
-                                //                //"HomeScore: " + HomeScore + "\n" +
-                                //                //"AwayScore: " + AwayScore + "\n" +
-                                //                //"MatchTimeHalf: " + MatchTimeHalf + "\n" +
-                                //                //"MatchTimeMinute: " + MatchTimeMinute + "\n" +
-                                //                "KickOffDateTime: " + KickOffDateTime + "\n" +
-                                //                "StatementDate: " + StatementDate + "\n" +
-                                //                "\n-FTHDP-\n" +
-                                //                "FTHDPH: " + FTHDPH + "\n" +
-                                //                "FTHDPA: " + FTHDPA + "\n" +
-                                //                "FTH: " + FTH + "\n" +
-                                //                "FTA: " + FTA + "\n" +
-                                //                "\nFTOU\n" +
-                                //                "FTOU: " + FTOU + "\n" +
-                                //                "FTO: " + FTO + "\n" +
-                                //                "FTU: " + FTU + "\n" +
-                                //                "\n1x2\n" +
-                                //                "FT1: " + FT1 + "\n" +
-                                //                "FT2: " + FT2 + "\n" +
-                                //                "FTX: " + FTX + "\n" +
-                                //                "\nOdd\n" +
-                                //                "FTOdd: " + FTOdd + "\n" +
-                                //                "FTEven: " + FTEven + "\n" +
-                                //                "\n-FHHDP-\n" +
-                                //                "FHHDPH: " + FHHDPH + "\n" +
-                                //                "FHHDPA: " + FHHDPA + "\n" +
-                                //                "FHH: " + FHH + "\n" +
-                                //                "FHA: " + FHA + "\n" +
-                                //                "\nFHOU\n" +
-                                //                "FHOU: " + FHOU + "\n" +
-                                //                "FHO: " + FHO + "\n" +
-                                //                "FHU: " + FHU + "\n" +
-                                //                "\n1x2\n" +
-                                //                "FH1: " + FH1 + "\n" +
-                                //                "FH2: " + FH2 + "\n" +
-                                //                "FHX: " + FHX + "\n"
-                                //                );
 
                                 string ref_id_password = DateTime.Now.ToString("yyyy-MM-dd") + "10" + "Soccer" + LeagueName + HomeTeamName + AwayTeamName;
                                 byte[] ref_id_encodedpassword = new UTF8Encoding().GetBytes(ref_id_password.Trim());
