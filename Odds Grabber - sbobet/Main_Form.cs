@@ -43,7 +43,6 @@ namespace Odds_Grabber___sbobet
         private int __b = 115;
         private bool __is_close;
         private bool __is_login = false;
-        private bool __is_send = false;
         private bool __m_aeroEnabled;
         List<String> __league_id = new List<String>();
         Form __mainFormHandler;
@@ -329,14 +328,16 @@ namespace Odds_Grabber___sbobet
 
         private void panel1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (__is_send)
+            if (Properties.Settings.Default.______is_send_telegram)
             {
-                __is_send = false;
+                Properties.Settings.Default.______is_send_telegram = false;
+                Properties.Settings.Default.Save();
                 MessageBox.Show("Telegram Notification is Disabled.", __app__website_name, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                __is_send = true;
+                Properties.Settings.Default.______is_send_telegram = true;
+                Properties.Settings.Default.Save();
                 MessageBox.Show("Telegram Notification is Enabled.", __app__website_name, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -418,48 +419,51 @@ namespace Odds_Grabber___sbobet
 
         private void SendABCTeam(string message)
         {
-            try
+            if (Properties.Settings.Default.______is_send_telegram)
             {
-                string datetime = DateTime.Now.ToString("dd MMM HH:mm:ss");
-                string urlString = "https://api.telegram.org/bot{0}/sendMessage?chat_id={1}&text={2}";
-                string apiToken = "651945130:AAGMFj-C4wX0yElG2dBU1SRbfrNZi75jPHg";
-                string chatId = "@odds_bot_abc_team";
-                string text = "Bot:%20-----" + __website_name.ToUpper() + "-----%0ADate%20and%20Time:%20[" + datetime + "]%0AMessage:%20<b>" + message + "</>&parse_mode=html";
-                urlString = String.Format(urlString, apiToken, chatId, text);
-                WebRequest request = WebRequest.Create(urlString);
-                Stream rs = request.GetResponse().GetResponseStream();
-                StreamReader reader = new StreamReader(rs);
-                string line = "";
-                StringBuilder sb = new StringBuilder();
-                while (line != null)
+                try
                 {
-                    line = reader.ReadLine();
-                    if (line != null)
-                        sb.Append(line);
-                }
-                __send = 0;
-            }
-            catch (Exception err)
-            {
-                __send++;
-
-                if (___CheckForInternetConnection())
-                {
-                    if (__send == 5)
+                    string datetime = DateTime.Now.ToString("dd MMM HH:mm:ss");
+                    string urlString = "https://api.telegram.org/bot{0}/sendMessage?chat_id={1}&text={2}";
+                    string apiToken = "651945130:AAGMFj-C4wX0yElG2dBU1SRbfrNZi75jPHg";
+                    string chatId = "@odds_bot_abc_team";
+                    string text = "Bot:%20-----" + __website_name.ToUpper() + "-----%0ADate%20and%20Time:%20[" + datetime + "]%0AMessage:%20<b>" + message + "</>&parse_mode=html";
+                    urlString = String.Format(urlString, apiToken, chatId, text);
+                    WebRequest request = WebRequest.Create(urlString);
+                    Stream rs = request.GetResponse().GetResponseStream();
+                    StreamReader reader = new StreamReader(rs);
+                    string line = "";
+                    StringBuilder sb = new StringBuilder();
+                    while (line != null)
                     {
-                        __Flag();
-                        __is_close = false;
-                        Environment.Exit(0);
+                        line = reader.ReadLine();
+                        if (line != null)
+                            sb.Append(line);
+                    }
+                    __send = 0;
+                }
+                catch (Exception err)
+                {
+                    __send++;
+
+                    if (___CheckForInternetConnection())
+                    {
+                        if (__send == 5)
+                        {
+                            __Flag();
+                            __is_close = false;
+                            Environment.Exit(0);
+                        }
+                        else
+                        {
+                            SendABCTeam(message);
+                        }
                     }
                     else
                     {
-                        SendABCTeam(message);
+                        __is_close = false;
+                        Environment.Exit(0);
                     }
-                }
-                else
-                {
-                    __is_close = false;
-                    Environment.Exit(0);
                 }
             }
         }
@@ -1059,7 +1063,7 @@ namespace Odds_Grabber___sbobet
         private async Task ___TaskWait()
         {
             Random _random = new Random();
-            int _random_number = _random.Next(10, 16);
+            int _random_number = _random.Next(25, 30);
             string _randowm_number_replace = _random_number.ToString() + "000";
             await Task.Delay(Convert.ToInt32(_randowm_number_replace));
         }
