@@ -245,11 +245,6 @@ namespace Odds_Grabber___sbobet
             WindowState = FormWindowState.Minimized;
         }
 
-        static int LineNumber([System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0)
-        {
-            return lineNumber;
-        }
-
         [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true, CharSet = CharSet.Unicode)]
         static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
 
@@ -419,7 +414,7 @@ namespace Odds_Grabber___sbobet
                 }
                 else
                 {
-                    SendMyBot("No Internet Connection Detected.\nLine number: " + LineNumber());
+                    SendMyBot(err.ToString());
                     __is_close = false;
                     Environment.Exit(0);
                 }
@@ -470,7 +465,7 @@ namespace Odds_Grabber___sbobet
                     }
                     else
                     {
-                        SendMyBot("No Internet Connection Detected.\nLine number: " + LineNumber());
+                        SendMyBot(err.ToString());
                         __is_close = false;
                         Environment.Exit(0);
                     }
@@ -549,7 +544,7 @@ namespace Odds_Grabber___sbobet
                 }
                 else
                 {
-                    SendMyBot("No Internet Connection Detected.\nLine number: " + LineNumber());
+                    SendMyBot(err.ToString());
                     __is_close = false;
                     Environment.Exit(0);
                 }
@@ -603,7 +598,7 @@ namespace Odds_Grabber___sbobet
                 }
                 else
                 {
-                    SendMyBot("No Internet Connection Detected.\nLine number: " + LineNumber());
+                    SendMyBot(err.ToString());
                     __is_close = false;
                     Environment.Exit(0);
                 }
@@ -989,7 +984,7 @@ namespace Odds_Grabber___sbobet
                                     }
                                     else
                                     {
-                                        SendMyBot("No Internet Connection Detected.\nLine number: " + LineNumber());
+                                        SendMyBot(err.ToString());
                                         __is_close = false;
                                         Environment.Exit(0);
                                     }
@@ -1070,7 +1065,7 @@ namespace Odds_Grabber___sbobet
                 }
                 else
                 {
-                    SendMyBot("No Internet Connection Detected.\nLine number: " + LineNumber());
+                    SendMyBot(err.ToString());
                     __is_close = false;
                     Environment.Exit(0);
                 }
