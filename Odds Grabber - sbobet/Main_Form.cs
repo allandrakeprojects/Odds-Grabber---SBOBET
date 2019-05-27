@@ -41,6 +41,7 @@ namespace Odds_Grabber___sbobet
         private string __app_detect_running = "SBOBET";
         private string __local_ip = "";
         private int __send = 0;
+        private int __vpn_count = 0;
         private int __r = 39;
         private int __g = 66;
         private int __b = 115;
@@ -614,11 +615,11 @@ namespace Odds_Grabber___sbobet
             Cef.Initialize(settings);
             chromeBrowser = new ChromiumWebBrowser("https://www.sbobet.com/euro/football/england");
             panel_cefsharp.Controls.Add(chromeBrowser);
-            chromeBrowser.AddressChanged += ChromiumBrowserAddressChanged;
+            chromeBrowser.AddressChanged += ChromiumBrowserAddressChangedAsync;
         }
 
         // CefSharp Address Changed
-        private void ChromiumBrowserAddressChanged(object sender, AddressChangedEventArgs e)
+        private async void ChromiumBrowserAddressChangedAsync(object sender, AddressChangedEventArgs e)
         {
             __url = e.Address.ToString();
             Invoke(new Action(() =>
@@ -629,13 +630,26 @@ namespace Odds_Grabber___sbobet
 
             if (e.Address.ToString().Contains("5.61"))
             {
-                SendABCTeam("Please setup first VPN to the installed PC.");
-                MessageBox.Show("Please setup first VPN to this PC.", __app__website_name, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                __is_close = false;
-                Environment.Exit(0);
+                __vpn_count++;
+
+                if (__vpn_count != 5)
+                {
+                    await ___TaskWait_Handler(15);
+                    chromeBrowser.Load("https://www.sbobet.com/euro/football/england");
+                    return;
+                }
+                else
+                {
+                    SendABCTeam("Please setup first VPN to the installed PC.");
+                    MessageBox.Show("Please setup first VPN to this PC.", __app__website_name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    __is_close = false;
+                    Environment.Exit(0);
+                }
             }
             else if (e.Address.ToString().Contains("www.sbobet.com"))
             {
+                __vpn_count = 0;
+                
                 Invoke(new Action(() =>
                 {
                     chromeBrowser.FrameLoadEnd += (sender_, args) =>
@@ -1031,10 +1045,21 @@ namespace Odds_Grabber___sbobet
                             var html = taskHtml.Result.ToString().ToLower();
                             if (html.Contains("dear user"))
                             {
-                                SendABCTeam("Please setup first VPN to the installed PC.");
-                                MessageBox.Show("Please setup first VPN to this PC.", __app__website_name, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                __is_close = false;
-                                Environment.Exit(0);
+                                __vpn_count++;
+
+                                if (__vpn_count != 5)
+                                {
+                                    await ___TaskWait_Handler(15);
+                                    chromeBrowser.Load("https://www.sbobet.com/euro/football/england");
+                                    return;
+                                }
+                                else
+                                {
+                                    SendABCTeam("Please setup first VPN to the installed PC.");
+                                    MessageBox.Show("Please setup first VPN to this PC.", __app__website_name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    __is_close = false;
+                                    Environment.Exit(0);
+                                }
                             }
                             else
                             {
