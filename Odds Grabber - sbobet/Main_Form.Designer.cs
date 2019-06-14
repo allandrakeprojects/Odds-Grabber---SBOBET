@@ -157,6 +157,7 @@
             this.panel2.Size = new System.Drawing.Size(158, 10);
             this.panel2.TabIndex = 5;
             this.panel2.TabStop = true;
+            this.panel2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDoubleClick);
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseDown);
             // 
             // timer_landing

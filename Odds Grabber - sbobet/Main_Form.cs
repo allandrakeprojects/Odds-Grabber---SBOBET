@@ -40,6 +40,14 @@ namespace Odds_Grabber___sbobet
         private string __tk = "";
         private string __app_detect_running = "SBOBET";
         private string __local_ip = "";
+        // Settings
+        private string __root_url = "";
+        private string __root_url_equals = "";
+        private string __root_url_login = "";
+        private string __SBOBET_running = "";
+        private string __username = "";
+        private string __password = "";
+        // End of Settings
         private int __send = 0;
         private int __vpn_count = 0;
         private int __r = 39;
@@ -150,6 +158,15 @@ namespace Odds_Grabber___sbobet
         public Main_Form()
         {
             InitializeComponent();
+
+            // Settings
+            __root_url = Properties.Settings.Default.______root_url.ToString().Replace("amp;", "");
+            __root_url_equals = Properties.Settings.Default.______root_url_equals.ToString().Replace("amp;", "");
+            __root_url_login = Properties.Settings.Default.______root_url_login.ToString().Replace("amp;", "");
+            __SBOBET_running = Properties.Settings.Default.______SBOBET_running.ToString().Replace("amp;", "");
+
+            //MessageBox.Show(Properties.Settings.Default.______is_send_telegram.ToString() + "\n" + __root_url + "\n" + __root_url_equals + "\n" + __root_url_login + "\n" + __SBOBET_running + "\n" + __username + "\n" + __password);
+            // End of Settings
 
             timer_landing.Start();
         }
@@ -613,7 +630,7 @@ namespace Odds_Grabber___sbobet
 
             settings.CachePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\CEF";
             Cef.Initialize(settings);
-            chromeBrowser = new ChromiumWebBrowser("https://www.sbobet.com/euro/football/england");
+            chromeBrowser = new ChromiumWebBrowser(__root_url);
             panel_cefsharp.Controls.Add(chromeBrowser);
             chromeBrowser.AddressChanged += ChromiumBrowserAddressChangedAsync;
         }
@@ -635,7 +652,7 @@ namespace Odds_Grabber___sbobet
                 if (__vpn_count != 5)
                 {
                     await ___TaskWait_Handler(15);
-                    chromeBrowser.Load("https://www.sbobet.com/euro/football/england");
+                    chromeBrowser.Load(__root_url);
                     return;
                 }
                 else
@@ -646,7 +663,7 @@ namespace Odds_Grabber___sbobet
                     Environment.Exit(0);
                 }
             }
-            else if (e.Address.ToString().Contains("www.sbobet.com"))
+            else if (e.Address.ToString().Contains(__root_url_equals))
             {
                 __vpn_count = 0;
                 
@@ -744,7 +761,7 @@ namespace Odds_Grabber___sbobet
                 wc.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
                 wc.Headers["X-Requested-With"] = "XMLHttpRequest";
                 string _date = DateTime.Now.ToString("yyyyMMdd");
-                byte[] result = await wc.DownloadDataTaskAsync("https://www.sbobet.com/en/data/event?ts=" + __ts + "&tk=" + __tk + _date + ",4,4,0,4&ac=3");
+                byte[] result = await wc.DownloadDataTaskAsync(__SBOBET_running + __ts + "&tk=" + __tk + _date + ",4,4,0,4&ac=3");
                 string responsebody = Encoding.UTF8.GetString(result);
 
                 string password = __running_01 + __api_key;
@@ -1036,7 +1053,7 @@ namespace Odds_Grabber___sbobet
                 {
                     if (err.ToString().ToLower().Contains("401"))
                     {
-                        chromeBrowser.Load("https://www.sportdafa.net/en/sports-df/sports");
+                        chromeBrowser.Load(__root_url_login);
                     }
                     else
                     {
@@ -1050,7 +1067,7 @@ namespace Odds_Grabber___sbobet
                                 if (__vpn_count != 5)
                                 {
                                     await ___TaskWait_Handler(15);
-                                    chromeBrowser.Load("https://www.sbobet.com/euro/football/england");
+                                    chromeBrowser.Load(__root_url);
                                     return;
                                 }
                                 else
@@ -1142,6 +1159,13 @@ namespace Odds_Grabber___sbobet
             {
                 sw.WriteLine("<<>>" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "<<>>");
             }
+        }
+
+        // added settings
+        private void panel2_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Form_Settings form_settings = new Form_Settings();
+            form_settings.ShowDialog();
         }
     }
 }

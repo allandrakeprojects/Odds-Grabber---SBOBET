@@ -82,5 +82,53 @@ namespace Odds_Grabber___sbobet.Properties {
                 this["______is_send_telegram"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.sbobet.com/euro/football/england")]
+        public string ______root_url {
+            get {
+                return ((string)(this["______root_url"]));
+            }
+            set {
+                this["______root_url"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("www.sbobet.com")]
+        public string ______root_url_equals {
+            get {
+                return ((string)(this["______root_url_equals"]));
+            }
+            set {
+                this["______root_url_equals"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.sportdafa.net/en/sports-df/sports")]
+        public string ______root_url_login {
+            get {
+                return ((string)(this["______root_url_login"]));
+            }
+            set {
+                this["______root_url_login"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://www.sbobet.com/en/data/event?ts=")]
+        public string ______SBOBET_running {
+            get {
+                return ((string)(this["______SBOBET_running"]));
+            }
+            set {
+                this["______SBOBET_running"] = value;
+            }
+        }
     }
 }

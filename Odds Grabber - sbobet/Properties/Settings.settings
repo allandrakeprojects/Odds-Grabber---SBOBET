@@ -17,5 +17,17 @@
     <Setting Name="______is_send_telegram" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="______root_url" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.sbobet.com/euro/football/england</Value>
+    </Setting>
+    <Setting Name="______root_url_equals" Type="System.String" Scope="User">
+      <Value Profile="(Default)">www.sbobet.com</Value>
+    </Setting>
+    <Setting Name="______root_url_login" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.sportdafa.net/en/sports-df/sports</Value>
+    </Setting>
+    <Setting Name="______SBOBET_running" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.sbobet.com/en/data/event?ts=</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
